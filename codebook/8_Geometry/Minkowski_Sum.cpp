@@ -1,14 +1,21 @@
-vector<pll> Minkowski(vector<pll> A, vector<pll> B) { // |A|,|B|>=3
-  hull(A), hull(B);
-  vector<pll> C(1, A[0] + B[0]), s1, s2; 
-  for (int i = 0; i < SZ(A); ++i) 
-    s1.pb(A[(i + 1) % SZ(A)] - A[i]);
-  for (int i = 0; i < SZ(B); i++) 
-    s2.pb(B[(i + 1) % SZ(B)] - B[i]);
-  for (int i = 0, j = 0; i < SZ(A) || j < SZ(B);)
-    if (j >= SZ(B) || (i < SZ(A) && cross(s1[i], s2[j]) >= 0))
-      C.pb(B[j % SZ(B)] + A[i++]);
-    else
-      C.pb(A[i % SZ(A)] + B[j++]);
-  return hull(C), C;
+void reorder_polygon(vector<pdd> &P){
+    int pos = 0;
+    for(int i = 1; i < SZ(P); i++)
+        if(P[i].Y < P[pos].Y || (P[i].Y == P[pos].Y && P[i].X < P[pos].X))
+            pos = i;
+    rotate(P.begin(), P.begin() + pos, P.end());
+}
+vector<pdd> Minkowski(vector<pdd> P, vector<pdd> Q){ // |P|,|Q|>=3
+    reorder_polygon(P), reorder_polygon(Q);
+    P.push_back(P[0]), P.push_back(P[1]);
+    Q.push_back(Q[0]), Q.push_back(Q[1]);
+    vector<pdd> result;
+    int i = 0, j = 0;
+    while(i < SZ(P) - 2 || j < SZ(Q) - 2){
+        result.push_back(P[i] + Q[j]);
+        auto c = cross(P[i + 1] - P[i], Q[j + 1] - Q[j]);
+        if(c >= 0 && i < SZ(P) - 2) ++i;
+        if(c <= 0 && j < SZ(Q) - 2) ++j;
+    }
+    return result;
 }
