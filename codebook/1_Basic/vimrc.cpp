@@ -5,3 +5,5 @@ hi cursorline cterm=none ctermbg=89
 set bg=dark
 inoremap {<CR> {<CR>}<Esc>ko<tab>
 ca Hash w !cpp -dD -P -fpreprocessed \| tr -d '[:space:]' \| md5sum \| cut -c-6
+map <F9> :w<bar>!g++ -D OWF "%";./a.out
+inoremap <F9> <Esc>:w<bar>!g++ -D OWF "%";./a.out
