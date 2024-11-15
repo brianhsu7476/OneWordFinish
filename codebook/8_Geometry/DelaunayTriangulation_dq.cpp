@@ -9,7 +9,7 @@ struct Edge {
 };
 struct Delaunay { // 0-base
   int n, oidx[N];
-  list<Edge> head[N]; // result udir. graph
+  list<Edge> head[N]; // ignore e.id < i when iter edge
   pll p[N];
   void init(int _n, pll _p[]) {
     n = _n, iota(oidx, oidx + n, 0);
