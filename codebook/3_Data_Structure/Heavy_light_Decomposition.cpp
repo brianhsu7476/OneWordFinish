@@ -3,7 +3,7 @@ struct Heavy_light_Decomposition { // 1-base
   int t, pl[N], data[N], val[N]; // val: vertex data
   vector<int> G[N];
   void init(int _n) {
-    n = _n;
+    n = _n, t = 0;
     for (int i = 1; i <= n; ++i)
       G[i].clear(), mxson[i] = 0;
   }
